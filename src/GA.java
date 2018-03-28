@@ -55,4 +55,8 @@ public class GA {
 
         }
     }
+    
+    public void tournamentPairing(ArrayList<City[]> paths) {
+        
+    }
 }

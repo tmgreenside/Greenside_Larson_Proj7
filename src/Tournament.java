@@ -2,30 +2,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * This class handles tournament pairing operations for a Genetic
+ * Algorithm.
+ * @author Trevor Greenside
+ */
 public class Tournament {
-    ArrayList<City[]> paths;
-
-    public void addArrays(City[] path){
-        paths.add(path);
+    /*
+    Description of algorithm from De Palma's slides:
+    
+    While ( < 16 mating pairs)
+    {
+      Do twice:
+        Randomly select subset of the population
+        Select  1 parent at random from subset
+        Add parents to set of mating pairs
     }
-
-    public void elimination(){
-        int numberToDelete = paths.size() / 2;
-        int[] randomIndices = new int[numberToDelete];
-        Random rand = new Random();
-        int totalIndicesAdded = 0;
-        while (totalIndicesAdded < numberToDelete){
-            int randomIndex = rand.nextInt(numberToDelete);
-            if(!Arrays.asList(randomIndices).contains(randomIndex)){
-                randomIndices[totalIndicesAdded] = randomIndex;
-                totalIndicesAdded++;
-            }
-        }
-        for(int i = 0; i < numberToDelete; i++){
-            randomIndices[i] = rand.nextInt(numberToDelete);
-        }
-        for (int integer: randomIndices) {
-            paths.remove(integer);
-        }
+    */
+    
+    public Tournament() {
+        
+    }
+    
+    public void doPairing(ArrayList<City[]> paths) {
+        
     }
 }
