@@ -45,6 +45,9 @@ public class Cities {
             y = (cities[i].y_coor - cities[i+1].y_coor) * (cities[i].y_coor - cities[i+1].y_coor);
             totalDistance += Math.sqrt(x + y);
         }
+        int finalStopx = (cities[cities.length - 1].x_coor - cities[0].x_coor) * (cities[cities.length - 1].x_coor - cities[0].x_coor);
+        int finalStopy = (cities[cities.length - 1].y_coor - cities[0].y_coor) * (cities[cities.length - 1].y_coor - cities[0].y_coor);
+        totalDistance += Math.sqrt(finalStopx + finalStopy);
         return totalDistance;
     }
 
