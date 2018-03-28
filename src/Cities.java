@@ -53,14 +53,14 @@ public class Cities {
 
     public void generateCrossoverChild(City[] parent1, City[] parent2){
         singlePtCrossover singlePtCros = new singlePtCrossover();
-        City[] child = singlePtCros.crossover(parent1, parent2);
-        double distance = calculateDistance(child);
-        System.out.println("distance for child is = " + distance);
+        //City[] child = singlePtCros.crossover(parent1, parent2);
+        //double distance = calculateDistance(child);
+        //System.out.println("distance for child is = " + distance);
     }
     public void generate2PtCrossoverChild(City[] parent1, City[] parent2){
         DoublePtCrossover doublePtCrossover = new DoublePtCrossover();
-        City[] child = doublePtCrossover.doubleCrossover(parent1,parent2);
-        double distance = calculateDistance(child);
-        System.out.println("distance for child is  " + distance);
+        //City[] child = doublePtCrossover.doubleCrossover(parent1,parent2);
+        //double distance = calculateDistance(child);
+        //System.out.println("distance for child is  " + distance);
     }
 }

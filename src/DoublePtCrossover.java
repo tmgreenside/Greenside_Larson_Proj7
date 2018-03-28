@@ -4,31 +4,45 @@ import java.util.Collections;
 import java.util.Random;
 
 public class DoublePtCrossover {
-    public City[] doubleCrossover(City[] array1, City[] array2){
+
+    public Children doubleCrossover(City[] array1, City[] array2){
         City[] child = new City[10];
+        City[] child2 = new City[10];
         Random rand = new Random();
         int size = array1.length;
-        int point2 = rand.nextInt(size);
-        int point1 = rand.nextInt(size);
-        int point3 = rand.nextInt(size);
-        int point4 = rand.nextInt(size);
-
+        int pointsAdded = 0;
         ArrayList<Integer> points = new ArrayList();
-        points.add(point1);
-        points.add(point2);
-        points.add(point3);
-        points.add(point4);
+        while(pointsAdded < 3){
+            int point = rand.nextInt(size);
+            if(!Arrays.asList(points).contains(point)){
+                points.add(point);
+                pointsAdded++;
+            }
+        }
+
         Collections.sort(points);
-        System.out.print(Arrays.toString(points.toArray()));
-        for(int i = points.get(0); i < points.get(1); i++){
+
+        System.out.println(Arrays.toString(points.toArray()));
+
+
+        for(int i = 0; i < points.get(0); i++){
             child[i] = array1[i];
         }
-        for(int i = points.get(2); i < points.get(3); i++){
+        for(int i = points.get(1); i < points.get(2); i++){
             child[i] = array1[i];
+        }
+        for(int i = points.get(0); i < points.get(1); i++){
+            child2[i] = array1[i];
+        }
+        for(int i = points.get(2); i < child2.length; i++){
+            child2[i] = array1[i];
         }
         int childIndex = 0;
         int parentIndex = 0;
-        while(childIndex < 10) {
+        int childIndex2 = 0;
+        int parentIndex2 = 0;
+        System.out.println(Arrays.toString(child));
+        while(childIndex < 10 && parentIndex < 10) {
             if (!Arrays.asList(child).contains(array2[parentIndex])) {
                 if (child[childIndex] == null) {
                     child[childIndex] = array2[parentIndex];
@@ -46,8 +60,29 @@ public class DoublePtCrossover {
                 }
             }
         }
+        System.out.println(Arrays.toString(child2));
+        while(childIndex2 < 10 && parentIndex2 < 10) {
+            if (!Arrays.asList(child2).contains(array2[parentIndex2])) {
+                if (child2[childIndex2] == null) {
+                    child2[childIndex2] = array2[parentIndex2];
+                    childIndex2++;
+                    parentIndex2++;
+                } else {
+                    childIndex2++;
+                }
+            } else {
+                if (child2[childIndex2] != null) {
+                    childIndex2++;
+                    parentIndex2++;
+                } else {
+                    parentIndex2++;
+                }
+            }
+        }
         System.out.println(Arrays.toString(child));
-        return child;
+        System.out.println(Arrays.toString(child2));
+        Children children = new Children(child, child2);
+        return children;
     }
 
 }
