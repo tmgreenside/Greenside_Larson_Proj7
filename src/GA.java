@@ -56,7 +56,22 @@ public class GA {
         }
     }
     
-    public void tournamentPairing(ArrayList<City[]> paths) {
-        
+    /*
+    Description of algorithm from De Palma's slides:
+    
+    While ( < 16 mating pairs)
+    {
+      Do twice:
+        Randomly select subset of the population
+        Select  1 parent at random from subset
+        Add parents to set of mating pairs
+    }
+    */
+    
+    /**
+     * Returns an instance of class Children
+     */
+    public void tournamentPairing() {
+        Children theChildren = new Children();
     }
 }

@@ -24,7 +24,7 @@ public class Tournament {
         
     }
     
-    public void doPairing(ArrayList<City[]> paths) {
+    public void tournamentPairing(ArrayList<City[]> paths) {
         
     }
 }
