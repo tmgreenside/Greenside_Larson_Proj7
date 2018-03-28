@@ -1,9 +1,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
 
 public class GA {
     ArrayList<City[]> paths = new ArrayList<>();
-
+    Random rand = new Random();
+    
     public void addArrays(City[] path){
         paths.add(path);
     }
@@ -34,7 +37,7 @@ public class GA {
     }
 
     //top down
-    public void generateChildrenDoublePoint(){
+    public void topDownPairingDouplePt(){
         Children childSet;
         DoublePtCrossover doublePtCross = new DoublePtCrossover();
         int pairs = paths.size()/2;
@@ -53,7 +56,7 @@ public class GA {
         }
     }
     //top down
-    public void generateChildrenSinglePoint(){
+    public void topDownPairingSinglePt(){
         Children childSet;
         singlePtCrossover singlePoint = new singlePtCrossover();
         int pairs = paths.size()/2;
@@ -88,6 +91,7 @@ public class GA {
                 paths.remove(path);
             }
         }
+    }
     
     /*
     Description of algorithm from De Palma's slides:
@@ -97,14 +101,55 @@ public class GA {
       Do twice:
         Randomly select subset of the population
         Select  1 parent at random from subset
-        Add parents to set of mating pairs
+      Add parents to set of mating pairs
     }
     */
     
     /**
      * Returns an instance of class Children
      */
-    public void tournamentPairing() {
-        Children theChildren = new Children();
+    public void tournamentPairingDoublePt() {
+        Children childSet;
+        DoublePtCrossover doublePtCross = new DoublePtCrossover();
+        int pairs = paths.size()/2;
+        int counter = 0;
+        ArrayList<Integer> usedIndeces = new ArrayList<>();
+        while(counter < pairs) {
+            int index1;
+            int index2;
+            do {
+                index1 = rand.nextInt(paths.size());
+                index2 = rand.nextInt(paths.size());
+            } while (index1 == index2 || usedIndeces.contains(index1) || usedIndeces.contains(index2));
+            
+            // Add parents to set of mating pairs
+            childSet = doublePtCross.doubleCrossover(paths.get(index1),paths.get(index2));
+            paths.add(counter,childSet.getFirstChild());
+            paths.add(counter,childSet.getSecondChild());
+        }
+    }
+    
+    /**
+     * Returns an instance of class Children
+     */
+    public void tournamentPairingSinglePt() {
+        Children childSet;
+        singlePtCrossover singlePtCross = new singlePtCrossover();
+        int pairs = paths.size()/2;
+        int counter = 0;
+        ArrayList<Integer> usedIndeces = new ArrayList<>();
+        while(counter < pairs) {
+            int index1;
+            int index2;
+            do {
+                index1 = rand.nextInt(paths.size());
+                index2 = rand.nextInt(paths.size());
+            } while (index1 == index2 || usedIndeces.contains(index1) || usedIndeces.contains(index2));
+            
+            // Add parents to set of mating pairs
+            childSet = singlePtCross.crossover(paths.get(index1),paths.get(index2));
+            paths.add(counter,childSet.getFirstChild());
+            paths.add(counter,childSet.getSecondChild());
+        }
     }
 }
