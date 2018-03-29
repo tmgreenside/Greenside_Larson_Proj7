@@ -8,6 +8,9 @@ public class DoublePtCrossover {
     public Children doubleCrossover(City[] array1, City[] array2){
         City[] child = new City[20];
         City[] child2 = new City[20];
+        System.out.println(Arrays.toString(array1));
+        System.out.println(Arrays.toString(array2));
+
         Random rand = new Random();
         int size = array1.length;
         int pointsAdded = 0;
@@ -37,7 +40,7 @@ public class DoublePtCrossover {
         int parentIndex = 0;
         int childIndex2 = 0;
         int parentIndex2 = 0;
-        System.out.println(Arrays.toString(child));
+        //System.out.println(Arrays.toString(child));
         while(childIndex < 20 && parentIndex < 20) {
             if (!Arrays.asList(child).contains(array2[parentIndex])) {
                 if (child[childIndex] == null) {
@@ -56,7 +59,7 @@ public class DoublePtCrossover {
                 }
             }
         }
-        System.out.println(Arrays.toString(child2));
+        //System.out.println(Arrays.toString(child2));
         while(childIndex2 < 20 && parentIndex2 < 20) {
             if (!Arrays.asList(child2).contains(array2[parentIndex2])) {
                 if (child2[childIndex2] == null) {
