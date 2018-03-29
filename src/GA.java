@@ -149,7 +149,7 @@ public class GA {
             for(int j = 0; j < paths.size() - i - 1; j++){
                 double distance1 = cities.calculateDistance(paths.get(j));
                 double distance2 = cities.calculateDistance(paths.get(j + 1));
-                if(distance1 > distance2){
+                if(distance1 < distance2){
                     City[] temp = Arrays.copyOf(paths.get(j), 20);
                     paths.set(j, paths.get(j+1));
                     paths.set(j+1, temp);

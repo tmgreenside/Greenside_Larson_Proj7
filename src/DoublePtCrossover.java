@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class DoublePtCrossover {
-
+    public static int MUTATION_RATE = 10;
     public Children doubleCrossover(City[] array1, City[] array2){
         City[] child = new City[20];
         City[] child2 = new City[20];
@@ -76,6 +76,24 @@ public class DoublePtCrossover {
                 } else {
                     parentIndex2++;
                 }
+            }
+        }
+
+        int mutate;
+        for (int num = 0; num < child.length - 2; num++) {
+            mutate = rand.nextInt(100);
+            if(mutate < MUTATION_RATE){
+                City city1 = child[num];
+                child[num] = child[num + 1];
+                child[num + 1] = city1;
+            }
+        }
+        for (int num = 0; num < child2.length - 2; num++) {
+            mutate = rand.nextInt(100);
+            if(mutate < MUTATION_RATE){
+                City city1 = child2[num];
+                child2[num] = child2[num + 1];
+                child2[num + 1] = city1;
             }
         }
         System.out.println("CHILD: " + Arrays.toString(child));

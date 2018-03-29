@@ -4,7 +4,7 @@ public class TSP {
 
         GA ga = new GA();
         ga.generateFirstSetOfPaths();
-        //ga.runTopDownDoublePt(10);
+        ga.runTopDownDoublePt(3000);
 
 
 
