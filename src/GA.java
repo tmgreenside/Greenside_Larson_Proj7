@@ -9,6 +9,7 @@ public class GA {
         paths.add(path);
     }
 
+    //generate 20 cities and create the first path
     public void generateFirstSetOfPaths(){
         City[] parent1 = new City[20];
         parent1[0] = (new City(50,50));
@@ -31,13 +32,20 @@ public class GA {
         parent1[17] = (new City(88,93));
         parent1[18] = (new City(37,21));
         parent1[19] = (new City(10,16));
+        //add this path to the array list of paths
         paths.add(parent1);
         int counter = 0;
+        //generate 19 more paths so that we have a population of 20
         while(counter < 20){
+            //copy parent 1 into parent 2
             City[] parent2 = new City[20];
             parent2 = parent1.clone();
+
+            //shuffle parent2 so that it is different than parent 1
             Collections.shuffle(Arrays.asList(parent2));
             boolean doNotAdd = false;
+            //loop through the array list and see if parent 2 is already in the list,
+            //if it is not we add it
             for (City[] path:paths) {
                 if(Arrays.equals(path,parent2)){
                     doNotAdd = true;
@@ -49,14 +57,6 @@ public class GA {
                 System.out.println(Arrays.toString(parent2));
             }
         }
-        DoublePtCrossover doublePtCrossover = new DoublePtCrossover();
-        doublePtCrossover.doubleCrossover(paths.get(0),paths.get(1));
-        doublePtCrossover.doubleCrossover(paths.get(2),paths.get(3));
-        doublePtCrossover.doubleCrossover(paths.get(4),paths.get(5));
-        doublePtCrossover.doubleCrossover(paths.get(6),paths.get(7));
-
-
-
     }
 
     //top down
@@ -66,14 +66,14 @@ public class GA {
         int pairs = paths.size()/2;
         System.out.println("Number of pairs = " + pairs);
         int counter = 0;
-        int counter2 = 0;
         int numberAdded = 0;
         while(numberAdded < (pairs * 2)){
-            counter2++;
-            System.out.println("COUNTER2: " + counter2);
+            //generate 2 children from the first two paths
             childSet = doublePtCross.doubleCrossover(paths.get(counter),paths.get(counter+1));
+            //ensure the 2 children are not equal
             if(!Arrays.equals(childSet.getFirstChild(),childSet.getSecondChild())) {
                 boolean doNotAdd = false;
+                //check if child1 and child2 are in the list of paths
                 for (City[] path:paths) {
                     if(Arrays.equals(path,childSet.getFirstChild())){
                         doNotAdd = true;
@@ -84,11 +84,13 @@ public class GA {
                         doNotAdd = true;
                     }
                 }
+                //if child1 and child2 are not in the list of paths we can add it to the array list, paths
                 if(!doNotAdd){
                     paths.add(childSet.getSecondChild());
                     numberAdded++;
                     paths.add(childSet.getFirstChild());
                     numberAdded++;
+                    //increment counter by 2 so that each parent is only mated once
                     counter = counter + 2;
                 }
             }
@@ -100,6 +102,7 @@ public class GA {
         }
     }
     //top down
+    //
     public void generateChildrenSinglePoint(){
         Children childSet;
         singlePtCrossover singlePoint = new singlePtCrossover();
@@ -141,10 +144,12 @@ public class GA {
         }
     }
 
+    //eliminate the half of the paths with the longest traversal distance
     public void elimination(){
         Cities cities = new Cities();
         int size = paths.size()/2;
         System.out.println("Size: " + size);
+        //bubble sort algorithm to sort from least to greatest distance
         for (int i = 0; i < paths.size() - 1; i++) {
             for(int j = 0; j < paths.size() - i - 1; j++){
                 double distance1 = cities.calculateDistance(paths.get(j));
