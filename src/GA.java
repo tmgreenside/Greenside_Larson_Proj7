@@ -36,45 +36,89 @@ public class GA {
         }
     }
 
-    //top down
-    public void topDownPairingDouplePt(){
+//top down
+    public void generateChildrenDoublePoint(){
         Children childSet;
         DoublePtCrossover doublePtCross = new DoublePtCrossover();
         int pairs = paths.size()/2;
+        System.out.println("Number of pairs = " + pairs);
         int counter = 0;
-        while(counter < pairs){
+        while(counter < (pairs * 2 - 1)){
             childSet = doublePtCross.doubleCrossover(paths.get(counter),paths.get(counter+1));
-            if(!Arrays.asList(paths).contains(childSet.getFirstChild()) && !Arrays.asList(paths).contains(childSet.getSecondChild())){
-                paths.add(counter,childSet.getFirstChild());
-                paths.add(counter,childSet.getSecondChild());
-                counter = counter + 2;
+            if(!Arrays.equals(childSet.getFirstChild(),childSet.getSecondChild())) {
+                boolean doNotAdd = false;
+                for (City[] path:paths) {
+                    if(Arrays.equals(path,childSet.getFirstChild())){
+                        doNotAdd = true;
+                    }
+                }
+                if(!doNotAdd){
+                    paths.add(counter, childSet.getFirstChild());
+                    counter++;
+                }
+                boolean doNotAdd2 = false;
+                for (City[] path:paths) {
+                    if(Arrays.equals(path,childSet.getSecondChild())){
+                        doNotAdd2 = true;
+                    }
+                }
+                if(!doNotAdd2){
+                    paths.add(counter, childSet.getSecondChild());
+                    counter++;
+                }
             }
         }
+        System.out.println("Size of arrayList: " + (paths.size() - 1));
         System.out.println("*******************************************************************************************************");
         for (City[] path:paths) {
             System.out.println(Arrays.toString(path));
         }
     }
     //top down
-    public void topDownPairingSinglePt(){
+    public void generateChildrenSinglePoint(){
         Children childSet;
         singlePtCrossover singlePoint = new singlePtCrossover();
         int pairs = paths.size()/2;
+        System.out.println("Number of pairs = " + pairs);
         int counter = 0;
-        while(counter < pairs){
+        while(counter < (pairs * 2 - 1)){
             childSet = singlePoint.crossover(paths.get(counter),paths.get(counter+1));
-            if(!Arrays.asList(paths).contains(childSet.getFirstChild()) && !Arrays.asList(paths).contains(childSet.getSecondChild())){
-                paths.add(counter,childSet.getFirstChild());
-                paths.add(counter+1,childSet.getSecondChild());
-                counter = counter + 2;
+            if(!Arrays.equals(childSet.getFirstChild(),childSet.getSecondChild())) {
+                boolean doNotAdd = false;
+                for (City[] path:paths) {
+                    if(Arrays.equals(path,childSet.getFirstChild())){
+                        doNotAdd = true;
+                    }
+                }
+                if(!doNotAdd){
+                    paths.add(counter, childSet.getFirstChild());
+                    counter++;
+                    System.out.println("ADDED" + counter);
+                }
+                boolean doNotAdd2 = false;
+                for (City[] path:paths) {
+                    if(Arrays.equals(path,childSet.getSecondChild())){
+                        doNotAdd2 = true;
+                    }
+                }
+                if(!doNotAdd2){
+                    paths.add(counter, childSet.getSecondChild());
+                    counter++;
+                    System.out.println("ADDED" + counter);
+                }
             }
-
+        }
+        System.out.println("Size of arrayList: " + (paths.size() - 1));
+        System.out.println("*******************************************************************************************************");
+        for (City[] path:paths) {
+            System.out.println(Arrays.toString(path));
         }
     }
 
     public void elimination(){
         Cities cities = new Cities();
         int size = paths.size()/2;
+        System.out.println("Size: " + size);
         for (int i = 0; i < paths.size() - 1; i++) {
             for(int j = 0; j < paths.size() - i - 1; j++){
                 double distance1 = cities.calculateDistance(paths.get(j));
@@ -86,10 +130,12 @@ public class GA {
                 }
             }
         }
+        System.out.println("***************************************************************************************************************");
+        for(int i = 0; i < size; i++){
+            paths.remove(i);
+        }
         for (City[] path:paths) {
-            if(paths.indexOf(path) < size){
-                paths.remove(path);
-            }
+            System.out.println(Arrays.toString(path));
         }
     }
     
