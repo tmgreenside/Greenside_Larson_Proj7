@@ -9,8 +9,8 @@ public class Cities {
     City[] parent2;
 
     public Cities() {
-        this.parent1 = new City[10];
-        this.parent2 = new City[10];
+        this.parent1 = new City[20];
+        this.parent2 = new City[20];
     }
 
     public void generateCities(){
@@ -24,6 +24,16 @@ public class Cities {
         parent1[7] = (new City(30,99));
         parent1[8] = (new City(29,80));
         parent1[9] = (new City(40,20));
+        parent1[10] = (new City(50,25));
+        parent1[11] = (new City(85,89));
+        parent1[12] = (new City(76,60));
+        parent1[13] = (new City(32,48));
+        parent1[14] = (new City(20,70));
+        parent1[15] = (new City(69,29));
+        parent1[16] = (new City(47,81));
+        parent1[17] = (new City(88,93));
+        parent1[18] = (new City(37,21));
+        parent1[19] = (new City(10,16));
         System.out.print("Parent 1: ");
         System.out.println(Arrays.toString(parent1));
     }

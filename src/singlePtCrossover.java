@@ -16,7 +16,7 @@ public class singlePtCrossover {
         for(int i = point1; i < child2.length; i++){
             child2[i] = p1[i];
         }
-        System.out.println(Arrays.toString(child));
+        //System.out.println(Arrays.toString(child));
         int childIndex1 = 0;
         int parentIndex1 = 0;
         int childIndex2 = 0;
@@ -39,7 +39,7 @@ public class singlePtCrossover {
                 }
             }
         }
-        System.out.println(Arrays.toString(child2));
+        //System.out.println(Arrays.toString(child2));
         while(childIndex2 < 10 && parentIndex2 < 10){
             if(!Arrays.asList(child2).contains(p2[parentIndex2])){
                 if(child2[childIndex2] == null) {
@@ -59,8 +59,8 @@ public class singlePtCrossover {
             }
         }
 
-        System.out.println("Child1:  " + Arrays.toString(child));
-        System.out.println("Child2:  " + Arrays.toString(child2));
+        //System.out.println("Child1:  " + Arrays.toString(child));
+        //System.out.println("Child2:  " + Arrays.toString(child2));
         Children children = new Children(child, child2);
         return children;
     }

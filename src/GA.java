@@ -1,49 +1,76 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 public class GA {
     ArrayList<City[]> paths = new ArrayList<>();
-    Random rand = new Random();
-    
+
     public void addArrays(City[] path){
         paths.add(path);
     }
+
     public void generateFirstSetOfPaths(){
-        City[] parent1 = new City[10];
+        City[] parent1 = new City[20];
         parent1[0] = (new City(50,50));
         parent1[1] = (new City(20, 89));
         parent1[2] = (new City(50, 60));
-        parent1[3] = (new City(28,35));
+        parent1[3] = (new City(2,3));
         parent1[4] = (new City(20,79));
         parent1[5] = (new City(69, 30));
-        parent1[6] = (new City(48,98));
+        parent1[6] = (new City(48,0));
         parent1[7] = (new City(30,99));
         parent1[8] = (new City(29,80));
         parent1[9] = (new City(40,20));
+        parent1[10] = (new City(50,25));
+        parent1[11] = (new City(85,89));
+        parent1[12] = (new City(76,60));
+        parent1[13] = (new City(32,48));
+        parent1[14] = (new City(20,70));
+        parent1[15] = (new City(69,29));
+        parent1[16] = (new City(47,81));
+        parent1[17] = (new City(88,93));
+        parent1[18] = (new City(37,21));
+        parent1[19] = (new City(10,16));
         paths.add(parent1);
         int counter = 0;
-        while(counter < 50){
-            City[] parent2 = new City[10];
+        while(counter < 20){
+            City[] parent2 = new City[20];
             parent2 = parent1.clone();
             Collections.shuffle(Arrays.asList(parent2));
-            if(!Arrays.asList(parent2).contains(parent2)){
+            boolean doNotAdd = false;
+            for (City[] path:paths) {
+                if(Arrays.equals(path,parent2)){
+                    doNotAdd = true;
+                }
+            }
+            if(!doNotAdd){
                 paths.add(parent2);
                 counter++;
                 System.out.println(Arrays.toString(parent2));
             }
         }
+        DoublePtCrossover doublePtCrossover = new DoublePtCrossover();
+        doublePtCrossover.doubleCrossover(paths.get(0),paths.get(1));
+        doublePtCrossover.doubleCrossover(paths.get(2),paths.get(3));
+        doublePtCrossover.doubleCrossover(paths.get(4),paths.get(5));
+        doublePtCrossover.doubleCrossover(paths.get(6),paths.get(7));
+
+
+
     }
 
-//top down
+    //top down
     public void generateChildrenDoublePoint(){
         Children childSet;
         DoublePtCrossover doublePtCross = new DoublePtCrossover();
         int pairs = paths.size()/2;
         System.out.println("Number of pairs = " + pairs);
         int counter = 0;
-        while(counter < (pairs * 2 - 1)){
+        int counter2 = 0;
+        int numberAdded = 0;
+        while(numberAdded < (pairs * 2)){
+            counter2++;
+            System.out.println("COUNTER2: " + counter2);
             childSet = doublePtCross.doubleCrossover(paths.get(counter),paths.get(counter+1));
             if(!Arrays.equals(childSet.getFirstChild(),childSet.getSecondChild())) {
                 boolean doNotAdd = false;
@@ -52,19 +79,17 @@ public class GA {
                         doNotAdd = true;
                     }
                 }
-                if(!doNotAdd){
-                    paths.add(counter, childSet.getFirstChild());
-                    counter++;
-                }
-                boolean doNotAdd2 = false;
                 for (City[] path:paths) {
                     if(Arrays.equals(path,childSet.getSecondChild())){
-                        doNotAdd2 = true;
+                        doNotAdd = true;
                     }
                 }
-                if(!doNotAdd2){
-                    paths.add(counter, childSet.getSecondChild());
-                    counter++;
+                if(!doNotAdd){
+                    paths.add(childSet.getSecondChild());
+                    numberAdded++;
+                    paths.add(childSet.getFirstChild());
+                    numberAdded++;
+                    counter = counter + 2;
                 }
             }
         }
@@ -107,6 +132,7 @@ public class GA {
                     System.out.println("ADDED" + counter);
                 }
             }
+
         }
         System.out.println("Size of arrayList: " + (paths.size() - 1));
         System.out.println("*******************************************************************************************************");
@@ -124,7 +150,7 @@ public class GA {
                 double distance1 = cities.calculateDistance(paths.get(j));
                 double distance2 = cities.calculateDistance(paths.get(j + 1));
                 if(distance1 > distance2){
-                    City[] temp = Arrays.copyOf(paths.get(j), 10);
+                    City[] temp = Arrays.copyOf(paths.get(j), 20);
                     paths.set(j, paths.get(j+1));
                     paths.set(j+1, temp);
                 }
@@ -137,65 +163,18 @@ public class GA {
         for (City[] path:paths) {
             System.out.println(Arrays.toString(path));
         }
+        City[] city = paths.get(paths.size() - 1);
+        System.out.println(Arrays.toString(city));
+        System.out.println("Final distance = " + cities.calculateDistance(paths.get(paths.size() - 1)));
     }
-    
-    /*
-    Description of algorithm from De Palma's slides:
-    
-    While ( < 16 mating pairs)
-    {
-      Do twice:
-        Randomly select subset of the population
-        Select  1 parent at random from subset
-      Add parents to set of mating pairs
-    }
-    */
-    
-    /**
-     * Returns an instance of class Children
-     */
-    public void tournamentPairingDoublePt() {
-        Children childSet;
-        DoublePtCrossover doublePtCross = new DoublePtCrossover();
-        int pairs = paths.size()/2;
-        int counter = 0;
-        ArrayList<Integer> usedIndeces = new ArrayList<>();
-        while(counter < pairs) {
-            int index1;
-            int index2;
-            do {
-                index1 = rand.nextInt(paths.size());
-                index2 = rand.nextInt(paths.size());
-            } while (index1 == index2 || usedIndeces.contains(index1) || usedIndeces.contains(index2));
-            
-            // Add parents to set of mating pairs
-            childSet = doublePtCross.doubleCrossover(paths.get(index1),paths.get(index2));
-            paths.add(counter,childSet.getFirstChild());
-            paths.add(counter,childSet.getSecondChild());
+
+    public void runTopDownDoublePt(int numberOfGenerations){
+        Cities cities = new Cities();
+        for(int i = 0; i < numberOfGenerations; i++){
+            generateChildrenDoublePoint();
+            elimination();
         }
-    }
-    
-    /**
-     * Returns an instance of class Children
-     */
-    public void tournamentPairingSinglePt() {
-        Children childSet;
-        singlePtCrossover singlePtCross = new singlePtCrossover();
-        int pairs = paths.size()/2;
-        int counter = 0;
-        ArrayList<Integer> usedIndeces = new ArrayList<>();
-        while(counter < pairs) {
-            int index1;
-            int index2;
-            do {
-                index1 = rand.nextInt(paths.size());
-                index2 = rand.nextInt(paths.size());
-            } while (index1 == index2 || usedIndeces.contains(index1) || usedIndeces.contains(index2));
-            
-            // Add parents to set of mating pairs
-            childSet = singlePtCross.crossover(paths.get(index1),paths.get(index2));
-            paths.add(counter,childSet.getFirstChild());
-            paths.add(counter,childSet.getSecondChild());
-        }
+        System.out.println(Arrays.toString(paths.get(paths.size() - 1)));
+        System.out.println("Final distance = " + cities.calculateDistance(paths.get(paths.size() - 1)));
     }
 }
