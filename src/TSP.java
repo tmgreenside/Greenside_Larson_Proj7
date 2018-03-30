@@ -6,8 +6,6 @@ public class TSP {
         ga.generateFirstSetOfPaths();
         ga.runTopDownDoublePt(3000);
 
-
-
     }
 
 }

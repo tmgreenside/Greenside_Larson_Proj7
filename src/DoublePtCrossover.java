@@ -28,7 +28,7 @@ public class DoublePtCrossover {
 
         Collections.sort(points);
 
-    //child gets indices, 0 to the first point of the first parent
+        //child gets indices, 0 to the first point of the first parent
         for(int i = 0; i < points.get(0); i++){
             child[i] = array1[i];
         }
@@ -107,8 +107,8 @@ public class DoublePtCrossover {
                 child2[num + 1] = city1;
             }
         }
-        System.out.println("CHILD: " + Arrays.toString(child));
-        System.out.println("CHILD: " + Arrays.toString(child2));
+        //System.out.println("CHILD: " + Arrays.toString(child));
+        //System.out.println("CHILD: " + Arrays.toString(child2));
         Children children = new Children(child, child2);
         return children;
     }

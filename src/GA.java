@@ -148,7 +148,7 @@ public class GA {
     public void elimination(){
         Cities cities = new Cities();
         int size = paths.size()/2;
-        System.out.println("Size: " + size);
+        //System.out.println("Size: " + size);
         //bubble sort algorithm to sort from least to greatest distance
         for (int i = 0; i < paths.size() - 1; i++) {
             for(int j = 0; j < paths.size() - i - 1; j++){
@@ -161,16 +161,21 @@ public class GA {
                 }
             }
         }
+        
         System.out.println("***************************************************************************************************************");
         for(int i = 0; i < size; i++){
             paths.remove(i);
         }
-        for (City[] path:paths) {
-            System.out.println(Arrays.toString(path));
-        }
+//        for (City[] path:paths) {
+//            System.out.println(Arrays.toString(path));
+//        }
         City[] city = paths.get(paths.size() - 1);
-        System.out.println(Arrays.toString(city));
+//        System.out.println(Arrays.toString(city));
         System.out.println("Final distance = " + cities.calculateDistance(paths.get(paths.size() - 1)));
+    }
+    
+    public void eliminationTournament() {
+        
     }
 
     public void runTopDownDoublePt(int numberOfGenerations){
@@ -181,5 +186,56 @@ public class GA {
         }
         System.out.println(Arrays.toString(paths.get(paths.size() - 1)));
         System.out.println("Final distance = " + cities.calculateDistance(paths.get(paths.size() - 1)));
+    }
+    
+    public void runTopDownSinglePt(int numberOfGenerations){
+        Cities cities = new Cities();
+        for(int i = 0; i < numberOfGenerations; i++){
+            generateChildrenSinglePoint();
+            elimination();
+        }
+        System.out.println(Arrays.toString(paths.get(paths.size() - 1)));
+        System.out.println("Final distance = " + cities.calculateDistance(paths.get(paths.size() - 1)));
+    }
+    
+    /*
+    Description of algorithm from De Palma's slides:
+    Do twice:
+      Randomly select subset of the population
+      Select  1 parent at random from subset
+        Add parents to set of mating pairs
+      Add parents to set of mating pairs
+    }
+    */
+
+    /**
+    * Returns an instance of class Children
+    */
+    public void runTournamentPairingDoublePt(int numberOfGenerations) {
+        Cities cities = new Cities();
+        for(int i = 0; i < numberOfGenerations; i++){
+            generateChildrenDoublePoint();
+        }
+        System.out.println(Arrays.toString(paths.get(paths.size() - 1)));
+        System.out.println("Final distance = " + cities.calculateDistance(paths.get(paths.size() - 1)));
+
+//        Children childSet;
+//        DoublePtCrossover doublePtCross = new DoublePtCrossover();
+//        int pairs = paths.size()/2;
+//        int counter = 0;
+//        ArrayList<Integer> usedIndeces = new ArrayList<>();
+//        while(counter < pairs) {
+//            int index1;
+//            int index2;
+//            do {
+//                index1 = rand.nextInt(paths.size());
+//                index2 = rand.nextInt(paths.size());
+//            } while (index1 == index2 || usedIndeces.contains(index1) || usedIndeces.contains(index2));
+//
+//            // Add parents to set of mating pairs
+//            childSet = doublePtCross.doubleCrossover(paths.get(index1),paths.get(index2));
+//            paths.add(counter,childSet.getFirstChild());
+//            paths.add(counter,childSet.getSecondChild());
+//        }
     }
 }
