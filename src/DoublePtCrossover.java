@@ -8,10 +8,10 @@ public class DoublePtCrossover {
     public static int MUTATION_RATE = 10;
     public Children doubleCrossover(City[] array1, City[] array2){
         //Arrays to hold new children
-        City[] child = new City[20];
-        City[] child2 = new City[20];
-        System.out.println(Arrays.toString(array1));
-        System.out.println(Arrays.toString(array2));
+        City[] child = new City[8];
+        City[] child2 = new City[8];
+        //System.out.println(Arrays.toString(array1));
+        //System.out.println(Arrays.toString(array2));
         //Generate random numbers to represent the points that crossover will occure
         Random rand = new Random();
         int size = array1.length;
@@ -48,7 +48,7 @@ public class DoublePtCrossover {
         //System.out.println(Arrays.toString(child));
 
         //while loop to fill in the gaps of child with values in parent 2
-        while(childIndex < 20 && parentIndex < 20) {
+        while(childIndex < 8 && parentIndex < 8) {
             if (!Arrays.asList(child).contains(array2[parentIndex])) {
                 if (child[childIndex] == null) {
                     child[childIndex] = array2[parentIndex];
@@ -68,7 +68,7 @@ public class DoublePtCrossover {
         }
         //System.out.println(Arrays.toString(child2));
         //while loop to fill in the gaps of the child with values in parent2
-        while(childIndex2 < 20 && parentIndex2 < 20) {
+        while(childIndex2 < 8 && parentIndex2 < 8) {
             if (!Arrays.asList(child2).contains(array2[parentIndex2])) {
                 if (child2[childIndex2] == null) {
                     child2[childIndex2] = array2[parentIndex2];
