@@ -1,29 +1,32 @@
-//This class generates children using single point crossover
-//This means that a random index is chosen and the cities between index 0 and the first point
-//and the first point and the last index are swapped. Then the gaps in each child path are
-//filled in.
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 public class singlePtCrossover {
-    public static int MUTATION_RATE = 2;//2 percent of the time we will randomly swap to cities to add some more variation
+    public static int MUTATION_RATE = 10;
     public Children crossover(City[] p1, City[] p2){
-        Random rand = new Random(); //create a random integer so we can grab a random point to do the crossover on
+        Random rand = new Random();
+        //System.out.println(Arrays.toString(p1));
+        //System.out.println(Arrays.toString(p2));
         int size = p1.length;
+        //System.out.println("SIZE: " + size);
         int point1 = rand.nextInt(size);
-        City[] child = new City[8];//create city array to hold child 1
-        City[] child2 = new City[8];//create city array to hold child 2
-        for(int i = 0; i < point1; i++){//set child1 equal to parent 1 from indices 0 to point1
+        //System.out.println("Random number: " + point1);
+        City[] child = new City[8];
+        City[] child2 = new City[8];
+        for(int i = 0; i < point1; i++){
             child[i] = p1[i];
         }
-        for(int i = point1; i < child2.length; i++){//set child 2 equal to parent 2 from indeces point1 to the last index
+        for(int i = point1; i < child2.length; i++){
             child2[i] = p1[i];
         }
+        //System.out.println("CHILD 1 before: " + Arrays.toString(child));
+        //System.out.println(Arrays.toString(child2));
         int childIndex1 = 0;
         int parentIndex1 = 0;
         int childIndex2 = 0;
         int parentIndex2 = 0;
-        while(childIndex1 < 8 && parentIndex1 < 8){//cycle through child1 and fill in the gaps
+        while(childIndex1 < 8 && parentIndex1 < 8){
             if(!Arrays.asList(child).contains(p2[parentIndex1])){
                 if(child[childIndex1] == null) {
                     child[childIndex1] = p2[parentIndex1];
@@ -42,7 +45,7 @@ public class singlePtCrossover {
             }
         }
 
-        while(childIndex2 < 8 && parentIndex2 < 8){//cycle through child2 and fill in the gaps
+        while(childIndex2 < 8 && parentIndex2 < 8){
             if(!Arrays.asList(child2).contains(p2[parentIndex2])){
                 if(child2[childIndex2] == null) {
                     child2[childIndex2] = p2[parentIndex2];
@@ -60,8 +63,9 @@ public class singlePtCrossover {
                 }
             }
         }
-
-        int mutate;//check if mutation should occur, there is a 2% chance for every index
+        //System.out.println("Child1:  " + Arrays.toString(child));
+        //System.out.println("Child2:  " + Arrays.toString(child2));
+        int mutate;
         for (int num = 0; num < child.length - 2; num++) {
             //random number generated to see if mutation occurs
             mutate = rand.nextInt(100);
@@ -81,8 +85,9 @@ public class singlePtCrossover {
                 child2[num + 1] = city1;
             }
         }
-
-        Children children = new Children(child, child2);//create the child set and return
+        //System.out.println("Child1:  " + Arrays.toString(child));
+        //System.out.println("Child2:  " + Arrays.toString(child2));
+        Children children = new Children(child, child2);
         return children;
     }
 }
