@@ -1,3 +1,5 @@
+//Class to create the Children object which holds 2 arrays of City objects representing the 2 children
+//that will be created by the parent paths
 public class Children {
     City[] firstChild;
     City[] secondChild;
